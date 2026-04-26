@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <addons>
-    <addon id="plugin.video.scrudio" name="Scrudio" version="1.0.0" provider-name="jacop">
+    <addon id="plugin.video.scrudio" name="Scrudio" version="1.0.2" provider-name="jacop">
         <requires>
             <import addon="xbmc.python" version="3.0.0" />
             <import addon="script.module.requests" version="2.27.1" />
@@ -21,7 +21,8 @@
                 <icon>resources/media/icon.png</icon>
                 <fanart>resources/media/fanart.jpg</fanart>
             </assets>
-            <news>v1.0.0 - Initial release: TMDB browsing, Torrentio + Real-Debrid streams, native Kodi playback.</news>
+            <news>v1.0.2 - Remove embedded API keys; users provide their own.
+v1.0.0 - Initial release: TMDB browsing, Torrentio + Real-Debrid streams, native Kodi playback.</news>
         </extension>
     </addon>
     <addon id="repository.scrudio" name="Scrudio Repository" version="1.0.0" provider-name="jacop">

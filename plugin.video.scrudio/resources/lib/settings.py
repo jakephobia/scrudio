@@ -3,13 +3,23 @@
 
 All access to user-configurable values goes through this module so the rest of
 the codebase never touches xbmcaddon directly.
+
+Embedded keys ship as fall-backs so the add-on works out of the box. Users may
+override either in the Settings dialog (their value wins).
 """
 from .kodi import ADDON
+
+# ── Embedded defaults (overridable from Settings) ────────────────────────────
+# Both keys are empty by default — users provide their own via Settings.
+# Power users can hard-code values here for personal/private builds.
+_EMBEDDED_TMDB_KEY = ''
+_EMBEDDED_RD_KEY = ''
 
 
 # ── API keys ─────────────────────────────────────────────────────────────────
 def tmdb_key() -> str:
-    return (ADDON.getSettingString('tmdb_api_key') or '').strip()
+    user = (ADDON.getSettingString('tmdb_api_key') or '').strip()
+    return user or _EMBEDDED_TMDB_KEY
 
 
 def has_tmdb() -> bool:
@@ -17,7 +27,8 @@ def has_tmdb() -> bool:
 
 
 def rd_key() -> str:
-    return (ADDON.getSettingString('rd_api_key') or '').strip()
+    user = (ADDON.getSettingString('rd_api_key') or '').strip()
+    return user or _EMBEDDED_RD_KEY
 
 
 def has_rd() -> bool:

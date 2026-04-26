@@ -1,4 +1,14 @@
+v1.0.2 (2026-04-26)
+- Remove embedded Real-Debrid token (was leaked in v1.0.1 git history).
+- Users must enter both TMDB and Real-Debrid keys in the Settings dialog.
+
+v1.0.1 (2026-04-26) — withdrawn
+- Briefly shipped with an embedded RD token. Rotate that token immediately.
+
 v1.0.0 (2026-04-26)
 - Initial release.
-- Phase 1 skeleton: home menu, settings (TMDB/RD/quality/cache), IT+EN strings.
-- Stubs for catalog, search, details, sources, play (notifies "coming soon").
+- TMDB browsing (trending/popular/top-rated/search) with caching.
+- Torrentio + Real-Debrid stream resolution.
+- Native Kodi playback via setResolvedUrl.
+- Favorites with context menu.
+- IT/EN localisation.
