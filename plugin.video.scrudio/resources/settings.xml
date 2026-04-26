@@ -84,6 +84,13 @@
                         <formatlabel>30402</formatlabel>
                     </control>
                 </setting>
+                <setting id="cache_clear" type="action" label="30410" help="">
+                    <level>0</level>
+                    <data>RunPlugin(plugin://plugin.video.scrudio/?action=cache_clear)</data>
+                    <control type="button" format="action">
+                        <heading>30410</heading>
+                    </control>
+                </setting>
             </group>
         </category>
 

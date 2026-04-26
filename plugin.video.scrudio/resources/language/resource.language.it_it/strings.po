@@ -61,6 +61,22 @@ msgctxt "#30125"
 msgid "No favorites yet"
 msgstr "Nessun preferito"
 
+msgctxt "#30126"
+msgid "No results found"
+msgstr "Nessun risultato"
+
+msgctxt "#30127"
+msgid "No results for: {}"
+msgstr "Nessun risultato per: {}"
+
+msgctxt "#30128"
+msgid "No seasons available"
+msgstr "Nessuna stagione disponibile"
+
+msgctxt "#30129"
+msgid "No episodes available"
+msgstr "Nessun episodio disponibile"
+
 msgctxt "#30130"
 msgid "Settings"
 msgstr "Impostazioni"
@@ -128,9 +144,21 @@ msgctxt "#30402"
 msgid "{0:d} hours"
 msgstr "{0:d} ore"
 
+msgctxt "#30140"
+msgid "Next page"
+msgstr "Pagina successiva"
+
+msgctxt "#30141"
+msgid "Searching sources…"
+msgstr "Cerco le sorgenti…"
+
 msgctxt "#30410"
 msgid "Clear cache"
 msgstr "Svuota cache"
+
+msgctxt "#30411"
+msgid "Cleared {0:d} cache files"
+msgstr "Eliminati {0:d} file di cache"
 
 # ── Errori e avvisi (30900-30999) ────────────────────────────────────────────
 msgctxt "#30901"
@@ -144,6 +172,14 @@ msgstr "Chiave API TMDB non configurata"
 msgctxt "#30903"
 msgid "Real-Debrid API key not configured"
 msgstr "Chiave API Real-Debrid non configurata"
+
+msgctxt "#30904"
+msgid "No playable sources found"
+msgstr "Nessuna sorgente riproducibile"
+
+msgctxt "#30905"
+msgid "IMDB id not available for this title"
+msgstr "ID IMDB non disponibile per questo titolo"
 
 msgctxt "#30950"
 msgid "Coming in the next phase"

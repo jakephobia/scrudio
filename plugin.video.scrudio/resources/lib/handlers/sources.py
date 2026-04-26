@@ -25,11 +25,12 @@ def _ensure_imdb_id(media_type: str, params: dict) -> str:
     if not tmdb_id:
         return ''
 
+    # Use the lighter /external_ids endpoint (~500 B) instead of the full
+    # details payload (~5 KB) — we only need imdb_id here.
     if media_type == 'movie':
-        details = tmdb.movie_details(tmdb_id) or {}
+        ext = tmdb.movie_external_ids(tmdb_id) or {}
     else:
-        details = tmdb.tv_details(tmdb_id) or {}
-    ext = details.get('external_ids') or {}
+        ext = tmdb.tv_external_ids(tmdb_id) or {}
     return ext.get('imdb_id') or ''
 
 
@@ -54,24 +55,27 @@ def list_(handle: int, params: dict) -> None:
 
     imdb_id = _ensure_imdb_id(media_type, params)
     if not imdb_id:
-        kodi.notify_error('IMDB id not available for this title')
+        kodi.notify_error(kodi.t(30905))
         xbmcplugin.endOfDirectory(handle, succeeded=False)
         return
 
     # ── Fetch ────────────────────────────────────────────────────────────────
     progress = xbmcgui.DialogProgressBG()
+    progress_open = False
     try:
-        progress.create(kodi.ADDON_NAME, 'Searching sources…')
+        progress.create(kodi.ADDON_NAME, kodi.t(30141))
+        progress_open = True
         sources = torrentio.get_streams(imdb_id, media_type,
                                         season=season, episode=episode)
     finally:
-        try:
-            progress.close()
-        except Exception:
-            pass
+        if progress_open:
+            try:
+                progress.close()
+            except Exception:
+                pass
 
     if not sources:
-        kodi.notify('No playable sources found')
+        kodi.notify(kodi.t(30904))
         xbmcplugin.endOfDirectory(handle, succeeded=False)
         return
 

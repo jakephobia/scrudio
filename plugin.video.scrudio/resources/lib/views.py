@@ -59,13 +59,14 @@ def browse_listitem(item: dict,
     else:
         is_fav = (media_type, int(tmdb_id)) in fav_set
 
+    # Trim plot aggressively — long URLs (encoded ~3x) can break Kodi's URL handling.
     fav_url = kodi.build_url(
         action='fav_toggle',
         media_type=media_type,
         tmdb_id=tmdb_id,
         title=title,
         year=year,
-        plot=(item.get('overview') or '')[:500],
+        plot=(item.get('overview') or '')[:200],
         poster=art.get('poster', ''),
         fanart=art.get('fanart', ''),
     )

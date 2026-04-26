@@ -61,11 +61,12 @@ def list_(handle: int, params: dict) -> None:
     # ── Pagination ───────────────────────────────────────────────────────────
     if page < total_pages and items_added > 0:
         next_url = kodi.build_url(action='catalog', kind=kind, page=page + 1)
-        next_li = kodi.make_listitem(f'> Page {page + 1} / {total_pages}')
+        next_li = kodi.make_listitem(
+            f'>> {kodi.t(30140)}  ({page + 1} / {total_pages})')
         kodi.add_directory_item(handle, next_url, next_li, is_folder=True)
 
     if items_added == 0:
-        kodi.notify(kodi.t(30951))
+        kodi.notify(kodi.t(30126))
 
     content_type = 'movies' if forced_media == 'movie' else (
         'tvshows' if forced_media == 'tv' else 'videos')

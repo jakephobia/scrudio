@@ -1,26 +1,41 @@
 # -*- coding: utf-8 -*-
-"""Torrentio client (Real-Debrid only).
+"""Stremio-style stream aggregator client.
 
-Endpoint pattern (with RD enabled):
-    https://torrentio.strem.fun/realdebrid=<KEY>/stream/<type>/<id>.json
+Endpoint pattern:
+    <BASE>/realdebrid=<KEY>/stream/<type>/<id>.json
 
   - type: 'movie' or 'series'
-  - id:   imdbId           (movie)
-          imdbId:S:E       (series episode)
+  - id:   imdbId            (movie)
+          imdbId:S:E        (series episode)
 
-Streams returned by Torrentio when RD is configured carry a `url` field:
-that URL is a Torrentio endpoint that 302-redirects to the actual Real-Debrid
-CDN download. Kodi follows redirects natively, so we just hand the URL to the
-player.
+Each stream has a `url` field that 302-redirects to the actual Real-Debrid CDN
+URL. Kodi follows the redirect natively.
+
+The PROVIDERS tuple is iterated in order; first non-empty result wins. Today
+the list contains only Torrentio (see comment above PROVIDERS), but the loop
+is preserved so a future Scrudio release can chain in a self-hosted mirror
+without changing get_streams().
 """
 from __future__ import annotations
 
 import re
-from typing import List, Optional
+from typing import List, Optional, Tuple
 
-from . import http, settings
+from . import http, kodi, settings
 
-BASE = 'https://torrentio.strem.fun'
+# Ordered list of (label, base_url). First success wins.
+#
+# Torrentio is currently the only public Stremio-compatible aggregator that
+# (a) accepts a plain `realdebrid=KEY` config segment and (b) has an active
+# scraper. KnightCrawler announced its own deprecation in 2025 and the
+# replacements (MediaFusion, Comet) require an encrypted config token that
+# cannot be generated outside their browser configurators.
+#
+# The tuple shape and provider-loop in get_streams() are preserved so a future
+# version can plug in a self-hosted instance without further refactoring.
+PROVIDERS: Tuple[Tuple[str, str], ...] = (
+    ('Torrentio', 'https://torrentio.strem.fun'),
+)
 
 _RE_SEEDS = re.compile(r'👤\s*(\d+)')
 _RE_SIZE = re.compile(r'💾\s*([\d.,]+\s*[GMKT]?B)', re.IGNORECASE)
@@ -70,19 +85,63 @@ def first_line(s: str) -> str:
     return (s or '').split('\n', 1)[0].strip()
 
 
+# ── Pure transformation (testable without Kodi) ──────────────────────────────
+def parse_streams(raw: list, allowed_qualities, drop_no_seeds: bool) -> List[dict]:
+    """Filter + normalise a Torrentio/KnightCrawler `streams` array.
+
+    Provider-agnostic: both APIs share the exact same response shape.
+    """
+    out: List[dict] = []
+    for s in (raw or []):
+        if not isinstance(s, dict):
+            continue
+        stream_url = s.get('url')
+        if not stream_url:
+            # No RD-resolvable URL → unplayable without a torrent client.
+            continue
+
+        name = s.get('name') or ''
+        title = s.get('title') or ''
+        quality = parse_quality(name + ' ' + title)
+        if quality not in allowed_qualities and quality != 'HD':
+            continue
+
+        seeds = parse_seeds(title)
+        if drop_no_seeds and seeds == 0 and 'RD+' not in name:
+            # When the file is RD-cached, seeds is often 0; we still trust it.
+            continue
+
+        out.append({
+            'release':   first_line(title),
+            'quality':   quality,
+            'seeds':     seeds,
+            'size':      parse_size(title),
+            'provider':  parse_provider(name),
+            'codec':     parse_codec(name),
+            'url':       stream_url,
+            'info_hash': s.get('infoHash'),
+            'rd_cached': 'RD+' in name,
+        })
+
+    out.sort(key=lambda x: (
+        _QUALITY_RANK.get(x['quality'], -1),
+        1 if x['rd_cached'] else 0,
+        x['seeds'],
+    ), reverse=True)
+    return out
+
+
 # ── API call ─────────────────────────────────────────────────────────────────
 def get_streams(imdb_id: str,
                 media_type: str,
                 season: int = 0,
                 episode: int = 0) -> List[dict]:
-    """media_type: 'movie' | 'series'.  Returns sources sorted by quality+seeds."""
-    if not imdb_id:
-        return []
-    if not settings.has_rd():
-        return []
+    """media_type: 'movie' | 'series'. Returns sources sorted by quality+seeds.
 
-    rd_key = settings.rd_key()
-    config = f'realdebrid={rd_key}/'
+    Tries each provider in PROVIDERS order; first non-empty result wins.
+    """
+    if not imdb_id or not settings.has_rd():
+        return []
 
     if media_type == 'movie':
         sid = imdb_id
@@ -91,54 +150,23 @@ def get_streams(imdb_id: str,
             return []
         sid = f'{imdb_id}:{int(season)}:{int(episode)}'
 
-    url = f'{BASE}/{config}stream/{media_type}/{sid}.json'
-    data = http.get_json(url) or {}
-    raw = data.get('streams') or []
-
+    config = f'realdebrid={settings.rd_key()}'
     allowed = settings.quality_filter()
     drop_no_seeds = settings.hide_no_seeds()
 
-    out = []
-    for s in raw:
-        if not isinstance(s, dict):
+    for label, base in PROVIDERS:
+        url = f'{base}/{config}/stream/{media_type}/{sid}.json'
+        data = http.get_json(url)
+        if data is None:
+            kodi.log_warning(f'{label}: HTTP failure for {sid}')
             continue
-        stream_url = s.get('url')
-        if not stream_url:
-            # No RD-resolvable URL → we can't play it without a torrent client.
-            continue
+        streams = parse_streams(data.get('streams') or [], allowed, drop_no_seeds)
+        if streams:
+            kodi.log_info(f'{label}: {len(streams)} playable streams for {sid}')
+            return streams
+        kodi.log_info(f'{label}: 0 streams for {sid}, trying next provider')
 
-        name = s.get('name') or ''
-        title = s.get('title') or ''
-        quality = parse_quality(name + ' ' + title)
-        if quality not in allowed and quality != 'HD':
-            continue
-
-        seeds = parse_seeds(title)
-        if drop_no_seeds and seeds == 0:
-            # When RD has the file, seeds is sometimes 0; trust the URL anyway
-            # only when RD has it cached (Torrentio prefixes the name with "RD+").
-            if 'RD+' not in name:
-                continue
-
-        out.append({
-            'release':  first_line(title),
-            'quality':  quality,
-            'seeds':    seeds,
-            'size':     parse_size(title),
-            'provider': parse_provider(name),
-            'codec':    parse_codec(name),
-            'url':      stream_url,
-            'info_hash': s.get('infoHash'),
-            'rd_cached': 'RD+' in name,
-        })
-
-    # Sort: quality desc, then seeds desc, RD cached items first within tier
-    out.sort(key=lambda x: (
-        _QUALITY_RANK.get(x['quality'], -1),
-        1 if x['rd_cached'] else 0,
-        x['seeds'],
-    ), reverse=True)
-    return out
+    return []
 
 
 def format_label(src: dict) -> str:

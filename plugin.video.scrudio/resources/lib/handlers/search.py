@@ -110,10 +110,11 @@ def run(handle: int, params: dict) -> None:
 
     if page < total_pages and items_added > 0:
         next_url = kodi.build_url(action='search_run', q=q, page=page + 1)
-        next_li = kodi.make_listitem(f'> Page {page + 1} / {total_pages}')
+        next_li = kodi.make_listitem(
+            f'>> {kodi.t(30140)}  ({page + 1} / {total_pages})')
         kodi.add_directory_item(handle, next_url, next_li, is_folder=True)
 
     if items_added == 0:
-        kodi.notify(f'No results for "{q}"')
+        kodi.notify(kodi.t(30127).format(q))
 
     kodi.end_directory(handle, content='videos', succeeded=True)

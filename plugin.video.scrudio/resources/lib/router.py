@@ -4,10 +4,10 @@
 Maps the `action` query parameter to a handler function. Handlers all share
 the signature `(handle: int, params: dict) -> None`.
 
-Phase 1: only `home` and `settings` are real; the rest are stubs that show
-"Coming soon" and end the directory cleanly so Kodi doesn't hang.
+A blanket try/except wraps every dispatch so a single bad request can never
+leave Kodi spinning on a half-built directory.
 """
-from .handlers import home, catalog, search, seasons, sources, play
+from .handlers import home, catalog, search, seasons, sources, play, maintenance
 from .handlers import favorites as favorites_handler
 from . import kodi
 
@@ -18,20 +18,23 @@ _ROUTES = {
     'home':         home.show,
     'settings':     home.open_settings,
 
-    # Phase 3 — TMDB browsing
+    # Browsing
     'catalog':      catalog.list_,
     'search':       search.prompt,
     'search_run':   search.run,
     'seasons':      seasons.list_seasons,
     'episodes':     seasons.list_episodes,
 
-    # Phase 4-5 — sources + playback
+    # Sources + playback
     'sources':      sources.list_,
     'play':         play.resolve,
 
-    # Phase 6 — favorites
+    # Favorites
     'fav_list':     favorites_handler.list_,
     'fav_toggle':   favorites_handler.toggle,
+
+    # Maintenance
+    'cache_clear':  maintenance.cache_clear,
 }
 
 

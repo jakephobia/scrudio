@@ -77,7 +77,7 @@ def list_seasons(handle: int, params: dict) -> None:
         items_added += 1
 
     if items_added == 0:
-        kodi.notify('No seasons available')
+        kodi.notify(kodi.t(30128))
     kodi.end_directory(handle, content='seasons', succeeded=True)
 
 
@@ -153,5 +153,5 @@ def list_episodes(handle: int, params: dict) -> None:
         items_added += 1
 
     if items_added == 0:
-        kodi.notify('No episodes available')
+        kodi.notify(kodi.t(30129))
     kodi.end_directory(handle, content='episodes', succeeded=True)

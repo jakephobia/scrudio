@@ -106,6 +106,11 @@ def tv_external_ids(tmdb_id: int):
     return _get(f'/tv/{tmdb_id}/external_ids', _params(), ttl_hours=TTL_DETAILS_HOURS)
 
 
+def movie_external_ids(tmdb_id: int):
+    """Lightweight call to fetch IMDB id for a movie (~500 B vs ~5 KB for full details)."""
+    return _get(f'/movie/{tmdb_id}/external_ids', _params(), ttl_hours=TTL_DETAILS_HOURS)
+
+
 # ── Helpers ──────────────────────────────────────────────────────────────────
 def kind_to_caller(kind: str):
     """Map a 'kind' string (used in routing) to the TMDB function."""
@@ -122,13 +127,17 @@ def kind_to_caller(kind: str):
 def detect_media_type(item: dict) -> str:
     """Pick a media type from a /trending or /search/multi entry.
 
-    Returns 'movie' or 'tv'. Defaults to 'movie' if ambiguous.
+    Returns 'movie', 'tv', or '' (the latter for person results that callers
+    must skip). For endpoints that don't carry media_type (popular_movies,
+    popular_tv, …) the heuristic prefers TV when an air-date is present.
     """
     mt = item.get('media_type')
     if mt in ('movie', 'tv'):
         return mt
-    # /movie/* endpoints return items without media_type → infer from fields
-    if 'first_air_date' in item or 'name' in item and 'title' not in item:
+    if mt == 'person':
+        return ''
+    # No explicit media_type → list endpoints. Use TV-specific keys to detect.
+    if 'first_air_date' in item or 'episode_run_time' in item:
         return 'tv'
     return 'movie'
 

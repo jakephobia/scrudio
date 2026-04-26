@@ -21,7 +21,8 @@ def resolve(handle: int, params: dict) -> None:
     title = params.get('title') or kodi.ADDON_NAME
     li = kodi.make_listitem(title, is_playable=True)
     li.setPath(url)
-    # Hint Kodi about the content type to keep it happy with HTTP redirects to RD CDN
-    li.setMimeType('video/mp4')
+    # Real-Debrid URLs 302-redirect to a CDN. Skip Kodi's HEAD probe so the
+    # redirect chain isn't traversed twice; let the player figure out the
+    # container/codec from the actual response stream.
     li.setContentLookup(False)
     xbmcplugin.setResolvedUrl(handle, True, li)

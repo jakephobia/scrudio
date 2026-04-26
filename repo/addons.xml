@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <addons>
-    <addon id="plugin.video.scrudio" name="Scrudio" version="1.0.3" provider-name="jacop">
+    <addon id="plugin.video.scrudio" name="Scrudio" version="1.2.0" provider-name="jacop">
         <requires>
             <import addon="xbmc.python" version="3.0.0" />
             <import addon="script.module.requests" version="2.27.1" />
@@ -21,8 +21,10 @@
                 <icon>resources/media/icon.png</icon>
                 <fanart>resources/media/fanart.jpg</fanart>
             </assets>
-            <news>v1.0.3 - Embed default TMDB key; users may still override in Settings.
-v1.0.0 - Initial release: TMDB browsing, Torrentio + Real-Debrid streams, native Kodi playback.</news>
+            <news>v1.2.0 - Refactor: pluggable PROVIDERS list, parse_streams as a tested pure function, room for future fallbacks.
+v1.1.0 - Reliability + i18n pass: HTTP retries x2, lighter TMDB calls, fixed MIME hint.
+v1.0.3 - Embed default TMDB key.
+v1.0.0 - Initial release.</news>
         </extension>
     </addon>
     <addon id="repository.scrudio" name="Scrudio Repository" version="1.0.0" provider-name="jacop">

@@ -29,10 +29,11 @@ _session: Optional[requests.Session] = None
 def _build_session() -> requests.Session:
     s = requests.Session()
     retry = Retry(
-        total=1,
-        backoff_factor=0.4,
-        status_forcelist=(500, 502, 503, 504),
+        total=2,                        # up to 2 retries on transient 5xx
+        backoff_factor=0.4,             # 0.4 s, 0.8 s
+        status_forcelist=(500, 502, 503, 504, 522, 524),
         allowed_methods=frozenset(['GET']),
+        respect_retry_after_header=True,
     )
     adapter = HTTPAdapter(max_retries=retry, pool_connections=4, pool_maxsize=4)
     s.mount('http://', adapter)

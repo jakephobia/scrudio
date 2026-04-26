@@ -1,3 +1,23 @@
+v1.2.0 (2026-04-26)
+- Refactored torrentio.py around a PROVIDERS tuple; get_streams() iterates
+  through it and returns the first non-empty result. Today only Torrentio
+  is listed (KnightCrawler announced its own deprecation in 2025; the named
+  successors require encrypted tokens that can't be generated client-side).
+- parse_streams() is now a pure function with dedicated unit tests covering
+  sort order, quality filtering, and "RD-cached overrides no-seeds" rules.
+- Test count: 19 → 26 (added 7 streaming-pipeline tests).
+
+v1.1.0 (2026-04-26)
+- Reliability: HTTP retries 1 → 2, expanded retry status list (522, 524).
+- Performance: use TMDB /external_ids endpoint (~500 B) instead of /movie/{id}
+  full details (~5 KB) when only the IMDB id is needed for Torrentio.
+- i18n: all user-visible strings now go through Kodi's localization layer
+  (page numbers, empty-result notices, sources progress, IMDB error, …).
+- Settings: working "Clear cache" button.
+- Playback: removed stray video/mp4 MIME hint that broke MKV playback.
+- Robustness: detect_media_type now skips TMDB person results explicitly.
+- Fav-toggle URL: trim plot to 200 chars to keep URLs under Kodi's limit.
+
 v1.0.3 (2026-04-26)
 - Embed default TMDB API key so the catalog works out of the box.
 - User-provided TMDB key in Settings still wins.

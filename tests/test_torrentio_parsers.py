@@ -29,20 +29,25 @@ def _load_torrentio_in_isolation():
     fake_pkg = types.ModuleType('scrudio_test_pkg')
     fake_http = types.ModuleType('scrudio_test_pkg.http')
     fake_settings = types.ModuleType('scrudio_test_pkg.settings')
+    fake_kodi = types.ModuleType('scrudio_test_pkg.kodi')
     fake_settings.has_rd = lambda: False
     fake_settings.rd_key = lambda: ''
     fake_settings.quality_filter = lambda: {'4K', '1080p', '720p', '480p'}
     fake_settings.hide_no_seeds = lambda: False
     fake_http.get_json = lambda *a, **kw: None
+    fake_kodi.log_info = lambda *a, **kw: None
+    fake_kodi.log_warning = lambda *a, **kw: None
+    fake_kodi.log_error = lambda *a, **kw: None
 
     sys.modules['scrudio_test_pkg'] = fake_pkg
     sys.modules['scrudio_test_pkg.http'] = fake_http
     sys.modules['scrudio_test_pkg.settings'] = fake_settings
+    sys.modules['scrudio_test_pkg.kodi'] = fake_kodi
 
     src = TORRENTIO_PATH.read_text(encoding='utf-8')
     # Rewrite the relative import to point to our stub package
-    src = src.replace('from . import http, settings',
-                      'from scrudio_test_pkg import http, settings')
+    src = src.replace('from . import http, kodi, settings',
+                      'from scrudio_test_pkg import http, kodi, settings')
 
     spec = importlib.util.spec_from_loader('torrentio_under_test', loader=None)
     module = importlib.util.module_from_spec(spec)
@@ -121,6 +126,65 @@ def test_provider_fallback_secondline():
 
 def test_provider_unknown():
     assert t.parse_provider('Solo una riga') == 'Unknown'
+
+
+# ── parse_streams ────────────────────────────────────────────────────────────
+def _stream(name, title, url='https://x/y', infoHash='abcd'):
+    return {'name': name, 'title': title, 'url': url, 'infoHash': infoHash}
+
+
+def test_parse_streams_drops_unplayable():
+    raw = [_stream('Torrentio\n1080p', 'Movie 👤 10', url=None)]
+    assert t.parse_streams(raw, {'1080p'}, drop_no_seeds=False) == []
+
+
+def test_parse_streams_quality_filter():
+    raw = [
+        _stream('Torrentio\n1080p', 'A 👤 5', infoHash='a'),
+        _stream('Torrentio\n720p', 'B 👤 5', infoHash='b'),
+    ]
+    out = t.parse_streams(raw, {'1080p'}, drop_no_seeds=False)
+    assert len(out) == 1
+    assert out[0]['quality'] == '1080p'
+
+
+def test_parse_streams_sort_by_quality_then_cached_then_seeds():
+    raw = [
+        _stream('Torrentio\n720p', 'C 👤 100', infoHash='c'),
+        _stream('Torrentio RD+\n1080p', 'A 👤 1', infoHash='a'),  # cached, low seeds
+        _stream('Torrentio\n1080p', 'B 👤 50', infoHash='b'),     # uncached, more seeds
+    ]
+    out = t.parse_streams(raw, {'1080p', '720p'}, drop_no_seeds=False)
+    assert [x['info_hash'] for x in out] == ['a', 'b', 'c']
+
+
+def test_parse_streams_hide_no_seeds_keeps_rd_cached():
+    raw = [
+        _stream('Torrentio RD+\n1080p', 'A 👤 0', infoHash='a'),  # cached, seeds=0 → keep
+        _stream('Torrentio\n1080p',     'B 👤 0', infoHash='b'),  # uncached, seeds=0 → drop
+    ]
+    out = t.parse_streams(raw, {'1080p'}, drop_no_seeds=True)
+    assert [x['info_hash'] for x in out] == ['a']
+
+
+def test_parse_streams_skips_non_dict():
+    raw = [None, 'hello', 42, _stream('Torrentio\n1080p', 'A 👤 5')]
+    out = t.parse_streams(raw, {'1080p'}, drop_no_seeds=False)
+    assert len(out) == 1
+
+
+# ── provider chain ───────────────────────────────────────────────────────────
+def test_providers_torrentio_first():
+    assert t.PROVIDERS[0][0] == 'Torrentio'
+
+
+def test_providers_well_formed():
+    """Every provider entry must be a (label, https-url) tuple."""
+    for entry in t.PROVIDERS:
+        assert isinstance(entry, tuple) and len(entry) == 2
+        label, base = entry
+        assert label and isinstance(label, str)
+        assert base.startswith('https://')
 
 
 # ── format_label ─────────────────────────────────────────────────────────────

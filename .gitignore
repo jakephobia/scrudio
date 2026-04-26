@@ -13,3 +13,6 @@ dist/
 scrudio_master_full.md
 scrudio_master_v2.md
 ciao.txt
+
+# Manual smoke-tests against external services
+tests/_smoke_*.py
