@@ -1,0 +1,4 @@
+v1.0.0 (2026-04-26)
+- Initial release.
+- Phase 1 skeleton: home menu, settings (TMDB/RD/quality/cache), IT+EN strings.
+- Stubs for catalog, search, details, sources, play (notifies "coming soon").

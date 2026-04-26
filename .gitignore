@@ -1,0 +1,15 @@
+__pycache__/
+*.pyc
+*.pyo
+.pytest_cache/
+.mypy_cache/
+.vscode/
+.idea/
+*.swp
+*~
+dist/
+
+# Local-only docs (drafts/archives)
+scrudio_master_full.md
+scrudio_master_v2.md
+ciao.txt

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="plugin.video.scrudio"
+       name="Scrudio"
+       version="1.0.0"
+       provider-name="jacop">
+
+    <requires>
+        <import addon="xbmc.python" version="3.0.0"/>
+        <import addon="script.module.requests" version="2.27.1"/>
+    </requires>
+
+    <extension point="xbmc.python.pluginsource" library="default.py">
+        <provides>video</provides>
+    </extension>
+
+    <extension point="xbmc.addon.metadata">
+        <summary lang="en_GB">Stremio-like browser for TMDB + Torrentio (Real-Debrid).</summary>
+        <summary lang="it_IT">Browser tipo Stremio per TMDB + Torrentio (Real-Debrid).</summary>
+        <description lang="en_GB">Browse TMDB catalogues, fetch streams from Torrentio resolved through Real-Debrid, and play them with the native Kodi player. Designed for Android TV and remote-only navigation.</description>
+        <description lang="it_IT">Sfoglia il catalogo TMDB, recupera le sorgenti tramite Torrentio risolte da Real-Debrid e riproduce con il player nativo di Kodi. Pensato per Android TV e navigazione solo telecomando.</description>
+        <platform>all</platform>
+        <license>MIT</license>
+        <language>en it</language>
+        <reuselanguageinvoker>true</reuselanguageinvoker>
+        <assets>
+            <icon>resources/media/icon.png</icon>
+            <fanart>resources/media/fanart.jpg</fanart>
+        </assets>
+        <news>v1.0.0 - Initial release: TMDB browsing, Torrentio + Real-Debrid streams, native Kodi playback.</news>
+    </extension>
+</addon>

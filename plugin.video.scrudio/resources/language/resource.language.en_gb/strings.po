@@ -1,0 +1,154 @@
+# Scrudio - English (en_GB)
+msgid ""
+msgstr ""
+"Project-Id-Version: plugin.video.scrudio\n"
+"Report-Msgid-Bugs-To: jacop\n"
+"POT-Creation-Date: 2026-04-26 00:00+0000\n"
+"PO-Revision-Date: 2026-04-26 00:00+0000\n"
+"Last-Translator: jacop\n"
+"Language-Team: English\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: en_GB\n"
+
+# ── Home menu (30100-30199) ──────────────────────────────────────────────────
+msgctxt "#30100"
+msgid "Trending"
+msgstr "Trending"
+
+msgctxt "#30101"
+msgid "Popular Movies"
+msgstr "Popular Movies"
+
+msgctxt "#30102"
+msgid "Popular TV Shows"
+msgstr "Popular TV Shows"
+
+msgctxt "#30103"
+msgid "Top Rated Movies"
+msgstr "Top Rated Movies"
+
+msgctxt "#30104"
+msgid "Top Rated TV Shows"
+msgstr "Top Rated TV Shows"
+
+msgctxt "#30110"
+msgid "Search"
+msgstr "Search"
+
+msgctxt "#30120"
+msgid "Favorites"
+msgstr "Favorites"
+
+msgctxt "#30121"
+msgid "Add to Favorites"
+msgstr "Add to Favorites"
+
+msgctxt "#30122"
+msgid "Remove from Favorites"
+msgstr "Remove from Favorites"
+
+msgctxt "#30123"
+msgid "Added to favorites"
+msgstr "Added to favorites"
+
+msgctxt "#30124"
+msgid "Removed from favorites"
+msgstr "Removed from favorites"
+
+msgctxt "#30125"
+msgid "No favorites yet"
+msgstr "No favorites yet"
+
+msgctxt "#30130"
+msgid "Settings"
+msgstr "Settings"
+
+# ── Settings: API (30200-30299) ──────────────────────────────────────────────
+msgctxt "#30200"
+msgid "API"
+msgstr "API"
+
+msgctxt "#30210"
+msgid "TMDB"
+msgstr "TMDB"
+
+msgctxt "#30211"
+msgid "TMDB API key"
+msgstr "TMDB API key"
+
+msgctxt "#30212"
+msgid "Catalog language"
+msgstr "Catalog language"
+
+msgctxt "#30220"
+msgid "Real-Debrid"
+msgstr "Real-Debrid"
+
+msgctxt "#30221"
+msgid "Real-Debrid API key"
+msgstr "Real-Debrid API key"
+
+# ── Settings: Catalog (30300-30399) ──────────────────────────────────────────
+msgctxt "#30300"
+msgid "Catalog"
+msgstr "Catalog"
+
+msgctxt "#30301"
+msgid "Allow 4K sources"
+msgstr "Allow 4K sources"
+
+msgctxt "#30302"
+msgid "Allow 1080p sources"
+msgstr "Allow 1080p sources"
+
+msgctxt "#30303"
+msgid "Allow 720p sources"
+msgstr "Allow 720p sources"
+
+msgctxt "#30304"
+msgid "Allow 480p sources"
+msgstr "Allow 480p sources"
+
+msgctxt "#30310"
+msgid "Hide sources with no seeds"
+msgstr "Hide sources with no seeds"
+
+# ── Settings: Cache (30400-30499) ────────────────────────────────────────────
+msgctxt "#30400"
+msgid "Cache"
+msgstr "Cache"
+
+msgctxt "#30401"
+msgid "Cache TTL (hours)"
+msgstr "Cache TTL (hours)"
+
+msgctxt "#30402"
+msgid "{0:d} hours"
+msgstr "{0:d} hours"
+
+msgctxt "#30410"
+msgid "Clear cache"
+msgstr "Clear cache"
+
+# ── Errors and notices (30900-30999) ─────────────────────────────────────────
+msgctxt "#30901"
+msgid "Missing stream URL"
+msgstr "Missing stream URL"
+
+msgctxt "#30902"
+msgid "TMDB API key not configured"
+msgstr "TMDB API key not configured"
+
+msgctxt "#30903"
+msgid "Real-Debrid API key not configured"
+msgstr "Real-Debrid API key not configured"
+
+msgctxt "#30950"
+msgid "Coming in the next phase"
+msgstr "Coming in the next phase"
+
+msgctxt "#30951"
+msgid "Unexpected error — see Kodi log"
+msgstr "Unexpected error — see Kodi log"

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="repository.scrudio"
+       name="Scrudio Repository"
+       version="1.0.0"
+       provider-name="jacop">
+
+    <requires>
+        <import addon="xbmc.addon" version="21.0.0"/>
+    </requires>
+
+    <extension point="xbmc.addon.repository" name="Scrudio Repository">
+        <dir>
+            <info compressed="false">https://raw.githubusercontent.com/jakephobia/scrudio/main/repo/addons.xml</info>
+            <checksum>https://raw.githubusercontent.com/jakephobia/scrudio/main/repo/addons.xml.md5</checksum>
+            <datadir zip="true">https://raw.githubusercontent.com/jakephobia/scrudio/main/repo/</datadir>
+        </dir>
+    </extension>
+
+    <extension point="xbmc.addon.metadata">
+        <summary lang="en_GB">Repository for the Scrudio add-on.</summary>
+        <summary lang="it_IT">Repository per l'add-on Scrudio.</summary>
+        <description lang="en_GB">Self-hosted Kodi repository delivering Scrudio updates from the GitHub project at jakephobia/scrudio.</description>
+        <description lang="it_IT">Repository Kodi self-hosted che distribuisce gli aggiornamenti di Scrudio dal progetto GitHub jakephobia/scrudio.</description>
+        <platform>all</platform>
+        <license>MIT</license>
+        <language>en it</language>
+        <assets>
+            <icon>icon.png</icon>
+        </assets>
+    </extension>
+</addon>

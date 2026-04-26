@@ -1,0 +1,16 @@
+# Keep repository payload bit-exact across platforms so Kodi's md5 check passes.
+repo/**/*.zip          binary
+repo/addons.xml        text eol=lf
+repo/addons.xml.md5    text eol=lf
+
+# Source files
+*.py        text eol=lf
+*.xml       text eol=lf
+*.po        text eol=lf
+*.md        text eol=lf
+*.txt       text eol=lf
+
+# Images are binary
+*.png       binary
+*.jpg       binary
+*.jpeg      binary
