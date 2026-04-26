@@ -1,3 +1,7 @@
+v1.0.3 (2026-04-26)
+- Embed default TMDB API key so the catalog works out of the box.
+- User-provided TMDB key in Settings still wins.
+
 v1.0.2 (2026-04-26)
 - Remove embedded Real-Debrid token (was leaked in v1.0.1 git history).
 - Users must enter both TMDB and Real-Debrid keys in the Settings dialog.

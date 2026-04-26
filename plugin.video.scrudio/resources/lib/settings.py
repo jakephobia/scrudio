@@ -12,7 +12,7 @@ from .kodi import ADDON
 # ── Embedded defaults (overridable from Settings) ────────────────────────────
 # Both keys are empty by default — users provide their own via Settings.
 # Power users can hard-code values here for personal/private builds.
-_EMBEDDED_TMDB_KEY = ''
+_EMBEDDED_TMDB_KEY = '3384c7898fd56a83dde3bff5e665a6ef'
 _EMBEDDED_RD_KEY = ''
 
 
