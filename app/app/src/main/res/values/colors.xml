@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Custom palette for Scrudio app (Light theme). -->
+<resources>
+    <!-- Primary accent color -->
+    <color name="sage">#7DAC6C</color>
+
+    <!-- Background colors (Light theme) -->
+    <color name="background">#EDF2F3</color>
+    <color name="surface">#F8FAFB</color>
+    <color name="surface_variant">#E8EBED</color>
+
+    <!-- Text colors (Light theme) -->
+    <color name="text_primary">#312F2F</color>
+    <color name="text_secondary">#5C5A5A</color>
+    <color name="text_hint">#8A8888</color>
+
+    <!-- Warning/error color -->
+    <color name="warning">#F71735</color>
+
+    <!-- Secondary accent (Dusty Taupe) -->
+    <color name="secondary">#A18276</color>
+
+    <!-- Focus/selection colors -->
+    <color name="focus_glow">#9CBF8E</color>
+    <color name="focus_outline">#7DAC6C</color>
+
+    <!-- Legacy aliases for backward compatibility -->
+    <color name="sage_primary">@color/sage</color>
+    <color name="sage_primary_muted">@color/secondary</color>
+    <color name="sage_background">@color/background</color>
+    <color name="sage_surface">@color/surface</color>
+    <color name="sage_surface_variant">@color/surface_variant</color>
+    <color name="sage_text_primary">@color/text_primary</color>
+    <color name="sage_text_secondary">@color/text_secondary</color>
+    <color name="sage_error">@color/warning</color>
+    <color name="sage_focus_glow">@color/focus_glow</color>
+    <color name="sage_outline">@color/surface_variant</color>
+    <color name="sage_browse_background">@color/background</color>
+    <color name="sage_browse_actions">@color/surface_variant</color>
+</resources>

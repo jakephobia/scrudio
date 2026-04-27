@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:title="@string/settings_title">
+
+    <PreferenceCategory app:title="@string/settings_section_account">
+
+        <!-- Primary path: device-flow OAuth, the user's phone does the typing. -->
+        <Preference
+            app:key="rd_pair"
+            app:title="@string/settings_pair_rd_title"
+            app:summary="@string/settings_pair_rd_summary" />
+
+        <!-- Fallback for users who already have a private API token. -->
+        <EditTextPreference
+            app:key="rd_key"
+            app:title="@string/settings_rd_key_manual_title"
+            app:summary="@string/settings_rd_key_summary"
+            app:dialogTitle="@string/settings_rd_key_title" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory app:title="@string/settings_section_filters">
+
+        <SwitchPreference
+            app:key="hide_no_seeds"
+            app:title="@string/settings_hide_no_seeds_title"
+            app:summary="@string/settings_hide_no_seeds_summary"
+            app:defaultValue="true" />
+
+        <ListPreference
+            app:key="language"
+            app:title="@string/settings_language_title"
+            app:dialogTitle="@string/settings_language_title"
+            app:entries="@array/language_entries"
+            app:entryValues="@array/language_values"
+            app:defaultValue="en-US" />
+
+    </PreferenceCategory>
+
+</PreferenceScreen>

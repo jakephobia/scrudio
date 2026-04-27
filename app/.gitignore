@@ -1,0 +1,14 @@
+.gradle/
+build/
+local.properties
+.idea/
+*.iml
+captures/
+.externalNativeBuild/
+.cxx/
+**/proguard/
+*.apk
+*.aab
+*.ap_
+*.dex
+.kotlin/

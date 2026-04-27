@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Scrudio</string>
+
+    <!-- Browse rows -->
+    <string name="row_trending">Trending</string>
+    <string name="row_popular_movies">Popular Movies</string>
+    <string name="row_popular_tv">Popular TV</string>
+    <string name="row_top_rated_movies">Top Rated Movies</string>
+    <string name="row_top_rated_tv">Top Rated TV</string>
+    <string name="row_favorites">Favorites</string>
+    <string name="row_search">Search</string>
+
+    <!-- Settings -->
+    <string name="settings_title">Settings</string>
+    <string name="settings_section_account">Account</string>
+    <string name="settings_section_filters">Filters</string>
+    <string name="settings_rd_key_title">Real-Debrid token</string>
+    <string name="settings_rd_key_summary">Tap to set or update the API token (premium account required)</string>
+    <string name="settings_rd_key_set">Configured</string>
+    <string name="settings_rd_key_unset">Not configured</string>
+    <string name="settings_hide_no_seeds_title">Hide sources with 0 seeds</string>
+    <string name="settings_hide_no_seeds_summary">RD-cached sources are kept regardless</string>
+    <string name="settings_language_title">Catalog language</string>
+
+    <!-- Details / Sources / Player -->
+    <string name="action_play">Play</string>
+    <string name="action_sources">Sources</string>
+    <string name="action_seasons">Seasons</string>
+    <string name="action_favorite_add">☆ Add to favorites</string>
+    <string name="action_favorite_remove">★ Remove favorite</string>
+    <string name="sources_loading">Searching sources…</string>
+    <string name="playback_buffering">Buffering…</string>
+
+    <!-- Real-Debrid pairing -->
+    <string name="pair_title">Pair Real-Debrid</string>
+    <string name="pair_step1">1. On your phone, open:</string>
+    <string name="pair_step2">2. Enter this code:</string>
+    <string name="pair_qr_description">QR code linking to the Real-Debrid pairing page</string>
+    <string name="pair_status_init">Requesting code…</string>
+    <string name="pair_status_waiting">Waiting for confirmation on your phone…</string>
+    <string name="pair_status_authorizing">Authorized, finalizing…</string>
+    <string name="pair_status_done">✓ Real-Debrid linked successfully</string>
+    <string name="pair_status_expired">Code expired — reopen this screen to retry.</string>
+    <string name="pair_status_error">Error: %1$s</string>
+    <string name="settings_pair_rd_title">Pair Real-Debrid (recommended)</string>
+    <string name="settings_pair_rd_summary">Authorize the TV from your phone with a QR code — no typing</string>
+    <string name="settings_rd_key_manual_title">Or paste an API token manually</string>
+
+    <!-- Errors -->
+    <string name="error_no_network">No network connection</string>
+    <string name="error_tmdb_key_missing">TMDB API key not configured</string>
+    <string name="error_rd_key_missing">Real-Debrid API key not configured</string>
+    <string name="error_no_sources">No playable sources found</string>
+</resources>

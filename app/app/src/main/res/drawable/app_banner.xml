@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Android TV requires android:banner @ 320x180 dp on the launcher manifest.
+  Vector drawable used here so we don't ship 7 density variants.
+-->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="320dp"
+    android:height="180dp"
+    android:viewportWidth="320"
+    android:viewportHeight="180">
+
+    <path
+        android:pathData="M0,0 H320 V180 H0 Z"
+        android:fillColor="#243329" />
+
+    <!-- Sage primary gradient stripe -->
+    <path
+        android:pathData="M0,148 H320 V180 H0 Z"
+        android:fillColor="#6B8E78" />
+
+    <!-- Wordmark "Scrudio" — letters as filled paths -->
+    <group android:translateX="34" android:translateY="58">
+        <!-- S -->
+        <path android:fillColor="#F6F7F4" android:pathData="M2,52 C12,62 30,62 38,54 C46,46 42,32 28,28 L18,24 C8,20 8,10 18,8 C28,6 38,12 40,18 L48,12 C42,2 26,-2 14,4 C2,10 -2,24 8,32 L24,38 C36,42 36,52 26,54 C16,56 6,50 2,42 Z" />
+    </group>
+    <group android:translateX="80" android:translateY="58">
+        <!-- c -->
+        <path android:fillColor="#F6F7F4" android:pathData="M28,52 C20,58 8,56 4,46 C0,36 4,22 16,18 C26,14 36,18 38,28 L30,30 C28,24 22,22 18,26 C12,30 12,44 18,46 C22,48 26,46 30,42 Z" />
+    </group>
+    <group android:translateX="124" android:translateY="58">
+        <!-- r -->
+        <path android:fillColor="#F6F7F4" android:pathData="M2,18 H10 V24 C12,18 18,16 24,18 V26 C18,24 12,28 12,34 V56 H2 Z" />
+    </group>
+    <group android:translateX="152" android:translateY="58">
+        <!-- u -->
+        <path android:fillColor="#F6F7F4" android:pathData="M2,18 V44 C2,52 8,58 18,58 C28,58 34,52 34,44 V18 H24 V42 C24,46 22,48 18,48 C14,48 12,46 12,42 V18 Z" />
+    </group>
+    <group android:translateX="194" android:translateY="58">
+        <!-- d -->
+        <path android:fillColor="#F6F7F4" android:pathData="M28,0 H38 V58 H28 V52 C24,58 16,58 10,54 C2,48 2,28 10,22 C16,18 24,18 28,24 Z M14,38 C14,46 26,46 28,38 C28,30 16,30 14,38 Z" />
+    </group>
+    <group android:translateX="240" android:translateY="58">
+        <!-- i -->
+        <path android:fillColor="#F6F7F4" android:pathData="M2,4 H12 V14 H2 Z M2,18 H12 V58 H2 Z" />
+    </group>
+    <group android:translateX="258" android:translateY="58">
+        <!-- o -->
+        <path android:fillColor="#F6F7F4" android:pathData="M22,18 C34,18 42,28 42,38 C42,48 34,58 22,58 C10,58 2,48 2,38 C2,28 10,18 22,18 Z M22,28 C16,28 12,32 12,38 C12,44 16,48 22,48 C28,48 32,44 32,38 C32,32 28,28 22,28 Z" />
+    </group>
+</vector>
